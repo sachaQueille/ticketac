@@ -7,6 +7,6 @@ body, html {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7db9e8', endColorstr='#1e5799',GradientType=0 );
 }
 
-.login {
-  padding: 4rem;
+.login, .home, .trips, .results {
+  padding: 5rem;
 }
