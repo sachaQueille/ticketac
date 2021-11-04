@@ -1,49 +1,81 @@
 var express = require('express');
 var router = express.Router();
+let {journeyModel} = require('../models/journey');
+let {UserModel} = require('../models/users');
 
-const mongoose = require('mongoose');
-
-// useNewUrlParser ;)
-var options = {
-  connectTimeoutMS: 5000,
-  useNewUrlParser: true,
-  useUnifiedTopology: true
- };
-
-// --------------------- BDD -----------------------------------------------------
-mongoose.connect('mongodb+srv://HackathonUser:Hackathon2021@cluster0.prvpu.mongodb.net/Ticketac?retryWrites=true&w=majority',
-   options,
-   function(err) {
-    if (err) {
-      console.log(`error, failed to connect to the database because --> ${err}`);
-    } else {
-      console.info('*** Database Ticketac connection : Success ***');
-    }
-   }
-);
-
-var journeySchema = mongoose.Schema({
-  departure: String,
-  arrival: String,
-  date: Date,
-  departureTime: String,
-  price: Number,
-});
-
-var journeyModel = mongoose.model('journey', journeySchema);
-
-var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"]
-var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"]
-
+var city = ["Paris","Marseille","Nantes","Lyon","Rennes","Melun","Bordeaux","Lille"];
+var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"];
 
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.render('login', { title: 'Express' });
 });
 
-router.get('/login', function(req, res, next) {
-  res.render('login');
+router.get('/', function(req, res, next) {
+  res.render('login', { title: 'Express' });
+});
+
+router.post('/search', async function(req, res, next) {
+  var trajet = await journeyModel.find({departure: req.body.cityfrom, arrival: req.body.cityto, date:req.body.date})
+  console.log(trajet)
+  if(!trajet){
+    res.redirect("/oups")
+  } else {
+    res.redirect("/results", {trajet})
+  }
+});
+
+router.get('/results', function(req, res, next) {
+  res.render('results', { title: 'Express' });
+});
+
+router.get('/order', function(req, res, next) {
+  res.render('order', { title: 'Express' });
+});
+
+router.get('/trips', function(req, res, next) {
+  res.render('trips', { title: 'Express' });
+});
+
+router.post('/sign-up', async(req, res, next) => {
+
+  let newUser = new UserModel ({
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+    email: req.body.mail,
+    pwd: req.body.pwd,
+  })
+  
+  let checkMail = await UserModel.findOne({email: req.body.mail});
+  
+  console.log(checkMail);
+  //console.log(userSaved)
+  if(checkMail == null) {
+    let userSaved = await newUser.save();
+    req.session.userName = userSaved.firstName;
+    //console.log(req.session.name);
+    req.session.userId = userSaved._id;
+    //console.log(req.session)
+    res.redirect('/home');
+  } else {
+    res.redirect('/');
+  }
+
+});
+
+router.post('/sign-in', async(req, res, next) => {
+
+  let userExist = await UserModel.findOne({mail: req.body.emailUser, pwd: req.body.pwdUser});
+
+  if(userExist) {
+    req.session.userName = userExist.firstName;
+    req.session.userID = userExist._id;
+    res.redirect('/home');
+  } else {
+    res.redirect('/');
+  }
+ 
 });
 
 // Remplissage de la base de donnée, une fois suffit
@@ -74,50 +106,6 @@ router.get('/save', async function(req, res, next) {
 
   }
   res.render('index', { title: 'Express' });
-});
-
-
-// Cette route est juste une verification du Save.
-// Vous pouvez choisir de la garder ou la supprimer.
-router.get('/result', function(req, res, next) {
-
-  // Permet de savoir combien de trajets il y a par ville en base
-  for(i=0; i<city.length; i++){
-
-    journeyModel.find( 
-      { departure: city[i] } , //filtre
-  
-      function (err, journey) {
-
-          console.log(`Nombre de trajets au départ de ${journey[0].departure} : `, journey.length);
-      }
-    )
-
-  }
-
-
-  res.render('index', { title: 'Express' });
-});
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
-
-router.get('/home', function(req, res, next) {
-  res.render('home', { title: 'Express' });
-});
-
-router.get('/results', function(req, res, next) {
-  res.render('results', { title: 'Express' });
-});
-
-router.get('/order', function(req, res, next) {
-  res.render('order', { title: 'Express' });
-});
-
-router.get('/trips', function(req, res, next) {
-  res.render('trips', { title: 'Express' });
 });
 
 module.exports = router;
