@@ -3,6 +3,7 @@
 
 <head>
     <title>
+        Search Result
     </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
@@ -17,41 +18,42 @@
         <!--form-->
         <div class='container-fluid'>
             <div class='row'>
-                
+
                 <div class="results col-lg-8 offset-lg-2">
                     <h3 class='text-white'>Tickets available on</h3>
-                    
+
                     <% for(let i=0; i < resultSearch.length; i++) { %>
-                    <li class="list-group-item d-flex justify-content-between align-items-center mt-2">
-                        
-                            <p class='my-auto'><%= resultSearch[i].cityfrom %>/<%= resultSearch[i].cityto %></p>
-        
-        
-        
-        
-                            <p class='my-auto'>Train départ à <%= resultSearch[i].hour %></p>
-            
-            
+                        <li class="list-group-item d-flex justify-content-between align-items-center mt-2">
+
+                            <p class='my-auto'>
+                                <%= resultSearch[i].cityfrom %>/<%= resultSearch[i].cityto %>
+                            </p>
+
+                            <p class='my-auto'>Train départ à <%= resultSearch[i].hour %>
+                            </p>
+                            
                             <div class='boutons my-auto'>
-                                <span class=''> <%= resultSearch[i].price %> €</span>
-                           
+                                <span class=''>
+                                    <%= resultSearch[i].price %> €
+                                </span>
+
                                 <a href='/order?position=<%= i%>'>
                                     <button type="submit" class="btn btn-danger">OK
                                     </button>
                                 </a>
-                            
-                            
-                            
+
+
+
                             </div>
                         </li>
 
-                      <%  } %>
-    
-        
+                        <% } %>
+
+
                 </div>
             </div>
         </div>
-        
+
 
 
         </div>

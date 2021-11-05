@@ -9,15 +9,15 @@ var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Express' });
+  res.render('login', {});
 });
 
 router.get('/home', function(req, res, next) {
-  res.render('home', { title: 'Express' });
+  res.render('home', {});
 });
 
 router.get('/results', async (req, res, next) => {
-  res.render('results', { title: 'Express', resultSearch: req.session.searchResult });
+  res.render('results', {resultSearch: req.session.searchResult });
 });
 
 router.get('/noresults', function(req, res, next) {
@@ -36,10 +36,6 @@ router.get('/order', function(req, res, next) {
 
 
   res.render('order', {result: req.session.shop , username: req.session.firstname });
-});
-
-router.get('/trips', function(req, res, next) {
-  res.render('trips', { title: 'Express' });
 });
 
 router.post('/sign-up', async(req, res, next) => {
@@ -87,7 +83,7 @@ router.post('/sign-in', async(req, res, next) => {
  
 });
 
-router.post('/search', async function(req, res, next) {
+router.post('/search', async (req, res, next) => {
   let resultSearch = await journeyModel.find({departure: req.body.cityfrom, arrival: req.body.cityto, date:req.body.date})
   
   let date = req.body.date; 
@@ -128,10 +124,7 @@ router.get('/updatebdd', async (req, res, next) => {
 		});
 	}
 	
-	await user.save(function (err) {
-  		if (err) return handleError(err);
-  		console.log('Success!');
-	});
+	await user.save();
 	
 	res.render('home', { username: req.session.firstname });
 });
@@ -139,10 +132,13 @@ router.get('/updatebdd', async (req, res, next) => {
 router.get('/lasttrips', async (req, res, next) => {
 
 	let user = await UserModel.findOne( {_id : req.session.userid} );
-
-	let lastTrips = user.trips;
-
-	res.render('lasttrips', { lastTrips,  username: req.session.firstname });
+  if(user) {
+    let lastTrips = user.trips;
+    res.render('lasttrips', { lastTrips});
+  } else {
+    res.redirect('/');
+  }
+	
 });
 
 router.get('/logout', function (req, res, next) {
@@ -177,7 +173,7 @@ router.get('/save', async function(req, res, next) {
     }
 
   }
-  res.render('index', { title: 'Express' });
+  res.render('/');
 });
 
 module.exports = router;
