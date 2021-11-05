@@ -17,45 +17,36 @@
         <!--form-->
         <div class='container-fluid'>
             <div class='row'>
+                
                 <div class="results col-lg-8 offset-lg-2">
+                    <h3 class='text-white'>Tickets available on</h3>
+                    
+                    <% for(let i=0; i < resultSearch.length; i++) { %>
                     <li class="list-group-item d-flex justify-content-between align-items-center mt-2">
-        
-                        <p class='my-auto'>Paris/Lille</p>
-        
-        
-        
-        
-                        <p class='my-auto'>Train départ à</p>
-        
-        
-                        <div class='boutons my-auto'>
-                            <span class=''> price</span>
-                            <button type="submit" class="btn btn-danger">OK
-                            </button>
-                        </div>
-        
-        
-        
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center mt-2">
-        
-                        <p class='my-auto'>Paris/Lille</p>
+                        
+                            <p class='my-auto'><%= resultSearch[i].cityfrom %>/<%= resultSearch[i].cityto %></p>
         
         
         
         
-                        <p class='my-auto'>Train départ à</p>
-        
-        
-                        <div class='boutons my-auto'>
-                            <span class=''> price</span>
-                            <button type="submit" class="btn btn-danger">OK
-                            </button>
-                        </div>
-        
-        
-        
-                    </li>
+                            <p class='my-auto'>Train départ à <%= resultSearch[i].hour %></p>
+            
+            
+                            <div class='boutons my-auto'>
+                                <span class=''> <%= resultSearch[i].price %> €</span>
+                           
+                                <a href='/order?position=<%= i%>'>
+                                    <button type="submit" class="btn btn-danger">OK
+                                    </button>
+                                </a>
+                            
+                            
+                            
+                            </div>
+                        </li>
+
+                      <%  } %>
+    
         
                 </div>
             </div>

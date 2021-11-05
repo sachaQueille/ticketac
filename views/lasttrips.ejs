@@ -19,39 +19,24 @@
                 <table class="table">
                     <thead class="table-light">
                         <tr>
-                            <th>N°</th>
-                            <th>Journey</th>
                             <th>Date</th>
+                            <th>Journey</th>
                             <th>Departume time</th>
                             <th>Price</th>
 
                         </tr>
                     </thead>
-                    <tfoot class='table-danger'>
-                        <tr>
-                            <th>Total</th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th>total</th>
-                      
-                            
-                        </tr>
-                    </tfoot>
-
-                    
                         <tbody class='table-light'>
                             
                             
-                           <% for(var i = 0; i<result.length; i++) {%>
+                           <% for(let i = 0; i<lastTrips.length; i++) {%>
                             
                             
                                 <tr>
                                     <th scope="row"><%=i%></th>
-                                    <td><%= result[i].cityfrom %> / <%= result[i].cityto %></td>
-                                    <td><%= result[i].date%></td>
-                                    <td><%= result[i].hour %></td>
-                                    <td><%= result[i].price %> €</td>
+                                    <td><%= lastTrips[i].date%></td>
+                                    <td><%= lastTrips[i].departure %> / <%= lastTrips[i].arrival %></td>
+                                    <td><%= lastTrips[i].price %> €</td>
                                 </tr>
                         
                             <% } %>
@@ -60,7 +45,7 @@
 
                 </table>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <a href='/updatebdd'>
+                    <a href='/home'>
                     <button type="submit" class="btn btn-danger" style="color:white;">Confirm</button></a>
                 </div>
             </div>
