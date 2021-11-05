@@ -12,15 +12,14 @@ router.get('/', function(req, res, next) {
   res.render('login', { title: 'Express' });
 });
 
-router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Express' });
+router.get('/home', function(req, res, next) {
+  res.render('home', { title: 'Express' });
 });
 
 router.post('/search', async function(req, res, next) {
   var trajet = await journeyModel.find({departure: req.body.cityfrom, arrival: req.body.cityto, date:req.body.date})
-  console.log(trajet)
-  if(!trajet){
-    res.redirect("/oups")
+  if(trajet.length < 0){
+    res.redirect("/noresults")
   } else {
     res.redirect("/results", {trajet})
   }
@@ -28,10 +27,6 @@ router.post('/search', async function(req, res, next) {
 
 router.get('/results', function(req, res, next) {
   res.render('results', { title: 'Express' });
-});
-
-router.get('/noresults', function(req, res, next) {
-  res.render('noresults', { title: 'Express' });
 });
 
 router.get('/order', function(req, res, next) {
@@ -81,16 +76,6 @@ router.post('/sign-in', async(req, res, next) => {
   }
  
 });
-
-router.post('/search', async function(req, res, next) {
-  let trajet = await journeyModel.find({departure: req.body.cityfrom, arrival: req.body.cityto, date:req.body.date})
-  console.log(trajet)
-  if(trajet.length > 0){
-    res.redirect("/results")
-  } else {
-    res.redirect("/noresults",)
-  }
-}); 
 
 // Remplissage de la base de donnée, une fois suffit
 router.get('/save', async function(req, res, next) {
