@@ -125,10 +125,7 @@ router.get('/updatebdd', async (req, res, next) => {
 		});
 	}
 	
-	await user.save(function (err) {
-  		if (err) return handleError(err);
-  		console.log('Success!');
-	});
+	await user.save();
 	
 	res.render('home', { username: req.session.firstname });
 });
