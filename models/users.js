@@ -16,6 +16,6 @@ let userSchema = mongoose.Schema({
     trips: [tripsSchema],
 })
 
-let UserModel = mongoose.model('users', userSchema);
+let UserModel = mongoose.model('users', userSchema)
 
 module.exports = {UserModel}
