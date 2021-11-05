@@ -9,19 +9,19 @@ var date = ["2018-11-20","2018-11-21","2018-11-22","2018-11-23","2018-11-24"];
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('login', { title: 'Express' });
+  res.render('login');
 });
 
 router.get('/home', function(req, res, next) {
-  res.render('home', { title: 'Express' });
+  res.render('home');
 });
 
 router.get('/results', async (req, res, next) => {
-  res.render('results', { title: 'Express', resultSearch: req.session.searchResult });
+  res.render('results', { resultSearch: req.session.searchResult });
 });
 
 router.get('/noresults', function(req, res, next) {
-  res.render('noresults', { title: 'Express' });
+  res.render('noresults');
 });
 
 router.get('/order', function(req, res, next) {

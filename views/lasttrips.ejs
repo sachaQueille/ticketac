@@ -32,7 +32,7 @@
                             
                            <% for(let i = 0; i<lastTrips.length; i++) {%>
                                 <tr>
-                                    <th scope="row"><%=i%></th>
+                                    <td><%=i + 1%></td>
                                     <td><%= lastTrips[i].departure %> / <%= lastTrips[i].arrival %></td>
                                     <td><%= lastTrips[i].date%></td>
                                     <td><%= lastTrips[i].price %> €</td>

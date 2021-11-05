@@ -16,6 +16,9 @@ session({
  saveUninitialized: false,
 })
 );
+app.locals.formatDate = date => {
+  return date.toLocaleDateString("fr-FR", {year: 'numeric', month: 'numeric', day: 'numeric'});
+};
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
