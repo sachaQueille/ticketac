@@ -3,6 +3,7 @@ var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
   return new bootstrap.Popover(popoverTriggerEl)
 
 })
+
 document.getElementById('popUp').addEventListener("click",
    function(){
      console.log("click détecté !");
